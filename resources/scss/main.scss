@@ -1,0 +1,12 @@
+@forward './components';
+@forward 'bootstrap';
+
+/* make the placeholder keep some space when injected */
+.reply-placeholder {
+    margin-top: 0.75rem;
+}
+
+/* Slide animation handled via max-height in JS; small nicety */
+.reply-form {
+    overflow: hidden;
+}

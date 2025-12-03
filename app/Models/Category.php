@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
+{
+   protected $fillable = [
+        'name',   
+        'slug',
+        'parent_id',
+        'is_active'     
+    ];
+
+    public function latestPost()
+    {
+        return $this->hasOne(Post::class)
+                    ->published()
+                    ->latest('created_at');
+    }
+
+    public function children(){
+        return $this->hasMany(Category::class, 'parent_id')->with('children');
+    }
+
+    public function parent(){
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+}

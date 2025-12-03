@@ -1,0 +1,51 @@
+/* ✅ Base desktop layout: logo centered */
+.navbar {
+    position: relative;
+}
+
+.navbar-brand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+/* ✅ Keep navbar content from overlapping logo */
+.navbar-collapse {
+    justify-content: space-between;
+}
+
+/* ✅ Dropdowns stacked inline on mobile */
+@media (max-width: 991.98px) {
+    .navbar {
+        text-align: center;
+    }
+
+    /* Center the logo inline on mobile */
+    .navbar-brand {
+        position: static;
+        transform: none;
+        margin: 0 auto;
+        display: block;
+        padding: 0.5rem 0;
+    }
+
+    /* Add spacing for expanded menu */
+    .navbar-collapse {
+        margin-top: 0.5rem;
+    }
+
+    .dropdown-menu.custom-dropdown {
+        position: static !important;
+        display: block;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .dropdown-menu.custom-dropdown .dropdown-item {
+        padding-left: 1rem;
+    }   
+}
