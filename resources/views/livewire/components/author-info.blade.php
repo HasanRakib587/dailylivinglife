@@ -1,6 +1,6 @@
 <!-- Author Info -->
-@if (!empty($profile))
-    <div class="card mb-3 my-5 rounded-0">
+<div class="card mb-3 my-5 rounded-0">
+    @if (!empty($profile))
         <img
         src="{{ Storage::url($profile['avatar']) }}"
         class="card-img-top rounded-0"
@@ -12,5 +12,5 @@
                 <a href="">facebook</a>
             </div>
         </div>
-    </div>    
-@endif
+    @endif
+</div> 
