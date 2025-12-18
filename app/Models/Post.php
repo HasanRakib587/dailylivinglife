@@ -23,6 +23,8 @@ class Post extends Model
         'is_archived',
         'is_featured',
         'is_trending',
+
+        'meta_description'
     ];
 
     protected $casts = [

@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
@@ -27,7 +28,7 @@ use App\Filament\Resources\PostResource\RelationManagers;
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
-
+    
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
     public static function form(Form $form): Form
@@ -41,6 +42,14 @@ class PostResource extends Resource
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn(string $operation, $state, callable $set) => 
                     $operation === 'create' ? $set('slug', Str::slug($state)) : null)->columnSpanFull(),
+                    
+                Textarea::make('meta_description')
+                        ->label('Meta Description')
+                        ->helperText('Limit: max 160 characters')
+                        ->maxLength(160)
+                        ->rows(3)
+                        ->columnSpanFull(),
+                            
                 Section::make('Status')->schema([
                     Toggle::make('is_published')
                         ->label('Published')
@@ -74,22 +83,34 @@ class PostResource extends Resource
                 ]),
                 Section::make('Images')->schema([
                     FileUpload::make('cover_image')
-                        ->image()
-                        ->disk('public_uploads')
+                        ->image()                        
+                        ->disk('public')
                         ->directory('posts')
                         ->visibility('public')
+                        ->deletable()
+                        ->deleteUploadedFileUsing(fn ($file) =>
+                            \Storage::disk('public')->delete($file))
+                        ->nullable()
                         ->multiple(false),
                     FileUpload::make('thumb_image')
                         ->image()
                         ->directory('posts')
                         ->disk('public')
                         ->visibility('public')
+                        ->deletable()
+                        ->deleteUploadedFileUsing(fn ($file) =>
+                            \Storage::disk('public')->delete($file))
+                        ->nullable()
                         ->multiple(false),
                     FileUpload::make('long_image')
                         ->image()
                         ->directory('posts')
                         ->disk('public')
                         ->visibility('public')
+                        ->deletable()
+                        ->deleteUploadedFileUsing(fn ($file) =>
+                            \Storage::disk('public')->delete($file))
+                        ->nullable()
                         ->multiple(false),                    
                 ]),
 
