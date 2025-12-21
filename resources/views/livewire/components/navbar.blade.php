@@ -14,7 +14,7 @@
 
       <!-- ✅ One logo (we’ll center it responsively with CSS) -->
       <a class="navbar-brand fw-bold text-uppercase" href="#">
-        <img src="{{ asset('images/DLL_Logo.png') }}" style="max-height: 100px" alt="">
+        <img src="{{ asset('images/DLL_Logo.png') }}" class="img-fluid mt-2" style="max-height: 100px" alt="">
       </a>
 
       <!-- Collapsible Menus -->
@@ -29,7 +29,7 @@
                       {{ $category->name }}
                     </a> --}}
                     <a class="nav-link d-none d-md-block
-                                                                              {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
+                                                                                              {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
                       href="{{ $category->children->isNotEmpty()
             ? '#'
             : route('category.listing', $category->slug) }}"
