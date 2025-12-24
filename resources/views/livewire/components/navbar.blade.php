@@ -5,7 +5,7 @@
 @endphp
 <header>
   <nav class="py-4 navbar navbar-expand-lg bg-body-tertiary position-relative">
-    <div class="container">
+    <div class="container-fluid">
       <!-- Hamburger -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
         aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,7 +14,7 @@
 
       <!-- ✅ One logo (we’ll center it responsively with CSS) -->
       <a class="navbar-brand fw-bold text-uppercase" href="#">
-        <img src="{{ asset('images/DLL_Logo.png') }}" class="img-fluid mt-2" style="max-height: 100px" alt="">
+        <img src="{{ asset('images/DLL_Logo.png') }}" class="img-fluid mt-2" style="max-height: 100px" alt="Logo">
       </a>
 
       <!-- Collapsible Menus -->
@@ -29,7 +29,7 @@
                       {{ $category->name }}
                     </a> --}}
                     <a class="nav-link d-none d-md-block
-                                                                                              {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
+                                                                                                              {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
                       href="{{ $category->children->isNotEmpty()
             ? '#'
             : route('category.listing', $category->slug) }}"
