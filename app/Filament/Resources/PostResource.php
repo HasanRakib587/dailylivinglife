@@ -64,11 +64,11 @@ class PostResource extends Resource
                 
                 Section::make('Metadata')->schema([
                     TextInput::make('slug')
-                        ->required()
-                        ->helperText('Auto generated from title')
-                        ->disabled()
-                        ->dehydrated(true)                   
-                        ->unique(Post::class,'slug', ignoreRecord: true),           
+                        ->required(),
+                        // ->helperText('Auto generated from title')
+                        // ->disabled()
+                        // ->dehydrated(true)                   
+                        // ->unique(Post::class,'slug', ignoreRecord: true),           
                     Select::make('category_id')
                         ->required()
                         ->searchable()
