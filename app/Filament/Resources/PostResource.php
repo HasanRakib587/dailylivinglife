@@ -24,6 +24,7 @@ use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\PostResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PostResource\RelationManagers;
+use Malzariey\FilamentLexicalEditor\FilamentLexicalEditor;
 
 class PostResource extends Resource
 {
@@ -115,11 +116,11 @@ class PostResource extends Resource
                 ]),
 
                 Section::make('Content')->schema([
-                    RichEditor::make('content')
-                        ->default(null)
-                        ->fileAttachmentsDisk('public')
-                        ->fileAttachmentsDirectory('Posts')
-                        ->extraAttributes(['style' => 'min-height: 600px; overflow-y: auto;',]),
+                    FilamentLexicalEditor::make('content')
+                        // ->default(null)
+                        // ->fileAttachmentsDisk('public')
+                        // ->fileAttachmentsDirectory('Posts')
+                        // ->extraAttributes(['style' => 'min-height: 600px; overflow-y: auto;',]),
                 ])->columnSpanFull(),
             ]);
     }

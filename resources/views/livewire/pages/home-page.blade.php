@@ -19,11 +19,12 @@
                     <span class="small px-1">Safiul Manowar</span>
                   </div>
                   <h5 class="card-title">{{ $post->title }}</h5>
-                  <p class="card-text">
-                    {!! Str::limit($post->content, 79) !!}
-                  </p>
+                  <div class="card-text post-content">
+                    {{-- {!! Str::limit($post->content, 79) !!} --}}
+                    {{ Str::limit(strip_tags($post->content), 79) }}
+                  </div>
                 </div>
-                <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="card-body custom-card-body">
                   <a wire:navigate href="{{ route('post.single', $post->slug) }}"
                     class="card-link btn btn-outline-danger rounded-0">Continue Reading</a>
                   <a href="#" class="card-link text-decoration-none text-black"><span

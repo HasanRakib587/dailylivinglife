@@ -10,3 +10,9 @@
 .reply-form {
     overflow: hidden;
 }
+
+.custom-card-body {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
