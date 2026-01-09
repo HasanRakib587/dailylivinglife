@@ -19,7 +19,7 @@
         <div class="article-cover">
             <div class="row">
                 <div class="col-md-12 mx-auto my-5">
-                    <img src="{{ Storage::url($post->cover_image) }}" class="img-fluid" alt="{{ $post->title }}" />
+                    <img src="{{ asset('uploads/'.$post->cover_image) }}" class="img-fluid" alt="{{ $post->title }}" />
                 </div>
             </div>
         </div>
