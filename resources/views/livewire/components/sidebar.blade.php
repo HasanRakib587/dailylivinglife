@@ -3,7 +3,7 @@
     {{-- <h1>Sidebar</h1> --}}
     @if($featuredPosts->isNotEmpty())
         <a class="text-decoration-none" href="">
-            <h1><span class="text-danger">Big</span> Salad</h1>
+            {{-- <h1><span class="text-danger">Big</span> Salad</h1> --}}
         </a>
         <hr class="text-primary" />
         <h3>Most Popular</h3>
