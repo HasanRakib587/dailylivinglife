@@ -42,6 +42,11 @@ class Post extends Model
         return $query->where('is_archived', true);
     }
 
+    public function scopeVisible($query)
+    {
+        return $query->published()->where('is_archived', false);
+    }
+
     public function scopeFeatured($query)
     {
         return $query->where('is_featured', true);

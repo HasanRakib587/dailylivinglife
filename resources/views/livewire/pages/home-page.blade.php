@@ -8,9 +8,9 @@
           <!-- Latest Articles -->
           <section>
             @foreach ($latestPosts as $post)
-              <!-- Latest Articles 1 -->
-              <div class="card border-0 my-5" wire:key='{{ $post->id }}'>
-                <img src="{{ asset('uploads/'. $post->cover_image) }}" class="card-img-top rounded-0"
+              <!-- Latest Articles -->
+              <div class="card border-0 my-5" wire:key='post-{{ $post->id }}'>
+                <img src="{{ asset('uploads/' . $post->cover_image) }}" class="card-img-top rounded-0"
                   alt="{{ $post->title }}" />
                 <div class="card-body text-center">
                   <div class="creation-date my-2">
@@ -26,9 +26,11 @@
                 </div>
                 <div class="card-body custom-card-body">
                   <a wire:navigate href="{{ route('post.single', $post->slug) }}"
-                    class="card-link btn btn-outline-danger rounded-0">Continue Reading</a>
+                    class="card-link btn btn-outline-secondary rounded-0">
+                    Continue Reading
+                  </a>
                   <a href="#" class="card-link text-decoration-none text-black"><span
-                      class="text-danger">{{ count($post->comments) }}</span> Comments</a>
+                      class="text-secondary">{{ count($post->comments) }}</span> Comments</a>
                 </div>
               </div>
             @endforeach
@@ -40,32 +42,34 @@
             <div class="row">
               @foreach ($olderPosts as $post)
                 <!-- Older Post 1 -->
-                <div class="col-md-6 my-5" wire:key='{{ $post->id }}'>
-                  <div class="card rounded-0 border-0 text-center">
-                    <img src="{{ Storage::url($post->long_image) }}" class="card-img-top" alt="{{ $post->title }}" />
-                    <div class="card-body">
-                      <h5 class="card-title">{{ $post->title }}</h5>
-                      <p class="card-text">
-                        {!! Str::limit($post->content, 79) !!}
-                      </p>
-                      <a href="#" class="text-decoration-none">
-                        <span class="text-danger">{{ count($post->comments) }}</span> comments
-                      </a>
+                <a class="text-decoration-none text-secondary" href="{{ route('post.single', $post->slug) }}">
+                  <div class="col-md-6 my-5" wire:key='{{ $post->id }}'>
+                    <div class="card rounded-0 border-0 text-center">
+                      <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top"
+                        alt="{{ $post->title }}" />
+                      <div class="card-body">
+                        <h5 class="card-title">{{ $post->title }}</h5>
+                        <p class="card-text">
+                          {!! Str::limit($post->content, 79) !!}
+                        </p>
+                        <a href="#" class="text-decoration-none">
+                          <span class="text-danger">{{ count($post->comments) }}</span> comments
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
               @endforeach
               @if ($olderPosts->isNotEmpty())
                 <div class="load my-5 py-5 text-center">
-                  <a class="btn btn-outline-danger rounded-0" href="">Load Previous articles</a>
+                  <a class="btn btn-outline-secondary rounded-0" href="">Load Previous articles</a>
                 </div>
               @endif
             </div>
           </section>
-
         </div>
-        <div class="col-md-4">
 
+        <div class="col-md-4">
           <!-- Author Info -->
           <livewire:components.author-info />
 
@@ -73,8 +77,6 @@
           <div class="big-salad text-center" style="margin-top: 70vh">
             <livewire:components.sidebar />
           </div>
-          {{-- @if ($featuredPosts->isNotEmpty())
-          @endif --}}
         </div>
       </div>
     </div>
@@ -89,16 +91,19 @@
           @foreach ($archivedPosts as $post)
             <div class="col-md-3" wire:key='{{ $post->id }}'>
               <div class="card text-center rounded-0 border-0">
-                <img src="{{ Storage::url($post->long_image) }}" class="card-img-top" alt="{{ $post->title }}" />
+                <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top" alt="{{ $post->title }}" />
                 <div class="card-body">
                   <h6>
-                    <a class="text-decoration-none my-5" href="">{{ $post->category->name }}</a>
+                    <a class="text-decoration-none my-5 text-secondary"
+                      href="{{ route('category.listing', $post->category->slug) }}">{{ $post->category->name }}</a>
                   </h6>
                   <h5 class="card-title">{{ $post->title }}</h5>
                   <p class="card-text">
                     {!! Str::limit($post->content, 79) !!}
                   </p>
-                  <a href="#" class="btn"><span class="text-danger">{{ count($post->comments) }}</span> comments</a>
+                  <a href="{{ route('post.single', $post->slug) }}" class="btn"><span class="text-danger">
+                      {{ count($post->comments) }}</span> comments
+                  </a>
                 </div>
               </div>
             </div>

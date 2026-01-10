@@ -5,9 +5,8 @@
 
                 <!-- Loop Comments -->
                 @foreach ($post->comments as $comment)
-                    <div class="card border-0 border-bottom comment mb-3"
-                         wire:key="comment-{{ $comment->id }}"
-                         x-data="{ openReply: false }">
+                    <div class="card border-0 border-bottom comment mb-3" wire:key="comment-{{ $comment->id }}"
+                        x-data="{ openReply: false }">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <span>{{ $comment->name }}</span> says
@@ -19,10 +18,9 @@
                                     {{ $comment->created_at->format('F d, Y g:i a') }}
                                 </p>
 
-                                <a href="#"
-                                   @click.prevent="openReply = !openReply"
-                                   class="reply-btn text-decoration-none text-uppercase text-danger">
-                                   <span x-text="openReply ? 'Cancel' : 'Reply'"></span>
+                                <a href="#" @click.prevent="openReply = !openReply"
+                                    class="reply-btn text-decoration-none text-uppercase text-secondary">
+                                    <span x-text="openReply ? 'Cancel' : 'Reply'"></span>
                                 </a>
                             </div>
                         </div>
@@ -44,22 +42,18 @@
                         <div class="mb-5" x-show="openReply" x-transition>
                             <form wire:submit.prevent="addReply({{ $comment->id }})" class="row g-3 mt-3">
                                 <div class="col-12">
-                                    <textarea wire:model.defer="replyText"
-                                              class="form-control border-black rounded-0"
-                                              style="height: 150px"
-                                              placeholder="Write your reply..."></textarea>
+                                    <textarea wire:model.defer="replyText" class="form-control border-black rounded-0"
+                                        style="height: 150px" placeholder="Write your reply..."></textarea>
                                 </div>
                                 <div class="col-md-6">
-                                    <input wire:model.defer="name"
-                                           type="text"
-                                           class="form-control border-0 border-bottom border-black rounded-0"
-                                           placeholder="Name *">
+                                    <input wire:model.defer="name" type="text"
+                                        class="form-control border-0 border-bottom border-black rounded-0"
+                                        placeholder="Name *">
                                 </div>
                                 <div class="col-md-6">
-                                    <input wire:model.defer="email"
-                                           type="email"
-                                           class="form-control border-0 border-bottom border-black rounded-0"
-                                           placeholder="Email *">
+                                    <input wire:model.defer="email" type="email"
+                                        class="form-control border-0 border-bottom border-black rounded-0"
+                                        placeholder="Email *">
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-outline-danger rounded-0">
@@ -76,25 +70,20 @@
                     <h4>Write a Comment</h4>
                     <form wire:submit.prevent="addComment" class="row g-3">
                         <div class="col-12">
-                            <textarea wire:model.defer="comment"
-                                      class="form-control border-black rounded-0"
-                                      style="height: 200px"
-                                      placeholder="Write your comment..."></textarea>
+                            <textarea wire:model.defer="comment" class="form-control border-black rounded-0"
+                                style="height: 200px" placeholder="Write your comment..."></textarea>
                         </div>
                         <div class="col-md-6">
-                            <input wire:model.defer="name"
-                                   type="text"
-                                   class="form-control border-0 border-bottom border-black rounded-0"
-                                   placeholder="Name *">
+                            <input wire:model.defer="name" type="text"
+                                class="form-control border-0 border-bottom border-black rounded-0" placeholder="Name *">
                         </div>
                         <div class="col-md-6">
-                            <input wire:model.defer="email"
-                                   type="email"
-                                   class="form-control border-0 border-bottom border-black rounded-0"
-                                   placeholder="Email *">
+                            <input wire:model.defer="email" type="email"
+                                class="form-control border-0 border-bottom border-black rounded-0"
+                                placeholder="Email *">
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-outline-danger rounded-0">
+                            <button type="submit" class="btn btn-outline-secondary rounded-0">
                                 Post Comment
                             </button>
                         </div>

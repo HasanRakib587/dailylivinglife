@@ -4,25 +4,27 @@
         <hr class="my-5" />
         <div class="article-meta d-flex justify-content-between">
             <p>{{ $post->created_at->format('F j, Y') }}</p>
-            <p>
-                <a class="text-decoration-none text-black text-uppercase" href="">
+            <p class="d-none d-md-block">
+                <a class="text-decoration-none text-secondary text-uppercase"
+                    href="{{ route('category.listing', $post->category->slug) }}">
                     {{ $post->category->name }}
                 </a>
             </p>
             <p class="text-uppercase">
-                by <span class="text-danger">Safiul Manowar</span>
+                by <span class="text-secondary">Safiul Manowar</span>
             </p>
         </div>
-        <div class="article-heading text-center my-5">
+        {{-- <div class="article-heading text-center my-5">
             <h1>{{ $post->title }}</h1>
         </div>
         <div class="article-cover">
             <div class="row">
                 <div class="col-md-12 mx-auto my-5">
-                    <img src="{{ asset('uploads/'.$post->cover_image) }}" class="img-fluid" alt="{{ $post->title }}" />
+                    <img src="{{ asset('uploads/' . $post->cover_image) }}" class="img-fluid"
+                        alt="{{ $post->title }}" />
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="container-fluid">
         <div class="article-content">
@@ -30,9 +32,9 @@
                 <div class="col-md-2 text-end">
                     <hr />
                     <a href="#allComments" class="fs-5 text-decoration-none text-black">
-                        <span class="text-danger">{{ count($post->comments) }}</span> comments
+                        <span class="text-secondary">{{ count($post->comments) }}</span> comments
                     </a>
-                    <a href="#commentForm" id="topWriteCommentLink" class="btn btn-outline-danger rounded-0 my-3">
+                    <a href="#commentForm" id="topWriteCommentLink" class="btn btn-outline-secondary rounded-0 my-3">
                         Write a comment
                     </a>
                 </div>
@@ -45,11 +47,19 @@
                     <!-- Tags -->
                     <div class="tags">
                         <span>Tags:</span>
-                        <a href="" class="text-decoration-none text-danger">Cofeee ,</a>
-                        <a href="" class="text-decoration-none text-danger">Style ,</a>
-                        <a href="" class="text-decoration-none text-danger">Life </a>
+                        @forelse ($post->tags as $tag)
+                            <a
+                                href="{{ route('tag.listing', $tag->slug) }}"
+                                class="text-decoration-none text-danger"
+                            >
+                                {{ $tag->name }}@if (! $loop->last),@endif
+                            </a>
+                        @empty
+                            <span class="text-muted">No tags</span>
+                        @endforelse
+
                         <p>
-                            <a href="">facebook</a>
+                            <a class="" href="">facebook</a>
                             <a href="">twitter</a>
                             <a href="">pinterest</a>
                             <a href="">email</a>
@@ -87,9 +97,9 @@
                     <div
                         class="col-12 col-md-6 d-flex flex-column flex-md-row justify-content-md-between align-items-center my-3 my-md-0 order-3 order-md-2">
                         <p class="mb-2 mb-md-0">
-                            <span class="text-danger">{{ count($post->comments) }}</span> Comments
+                            <span class="text-secondary">{{ count($post->comments) }}</span> Comments
                         </p>
-                        <a id="writeCommentBtn" class="btn btn-outline-danger rounded-0" href="#commentForm">Write a
+                        <a id="writeCommentBtn" class="btn btn-outline-secondary rounded-0" href="#commentForm">Write a
                             comment</a>
                     </div>
                 </div>

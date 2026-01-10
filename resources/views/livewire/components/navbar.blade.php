@@ -4,7 +4,7 @@
   $rightCategories = $categories->skip(4);
 @endphp
 <header>
-  <nav class="py-4 navbar navbar-expand-lg bg-body-tertiary position-relative">
+  <nav class="py-4 navbar navbar-expand-lg position-relative">
     <div class="container-fluid">
       <!-- Hamburger -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
@@ -13,7 +13,7 @@
       </button>
 
       <!-- ✅ One logo (we’ll center it responsively with CSS) -->
-      <a class="navbar-brand fw-bold text-uppercase" href="#">
+      <a class="navbar-brand fw-bold text-uppercase" href="{{ route('home') }}">
         <img src="{{ asset('images/DLL_Logo.png') }}" class="img-fluid mt-2" style="max-height: 100px" alt="Logo">
       </a>
 
@@ -22,36 +22,36 @@
         <!-- Left Menu -->
         <ul class="navbar-nav">
           @foreach ($leftCategories as $category)
-                  <a class="d-block d-md-none text-decoration-none text-start" href="">{{ $category->name }}</a>
-                  <li class="nav-item dropdown">
-                    {{-- <a class="nav-link dropdown-toggle d-none d-md-block" href="#" role="button" data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      {{ $category->name }}
-                    </a> --}}
-                    <a class="nav-link d-none d-md-block
-                                                                                                              {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
-                      href="{{ $category->children->isNotEmpty()
-            ? '#'
-            : route('category.listing', $category->slug) }}"
-                      role="{{ $category->children->isNotEmpty() ? 'button' : '' }}" @if($category->children->isNotEmpty())
-                      data-bs-toggle="dropdown" aria-expanded="false" @endif>
-                      {{ $category->name }}
-                    </a>
-                    @if($category->children->isNotEmpty())
-                      <ul class="dropdown-menu custom-dropdown">
-                        @foreach($category->children as $child)
-                          <li>
-                            <a class="dropdown-item" href="{{ route('category.listing', $child->slug) }}">
-                              {{ $child->name }}
-                            </a>
-                          </li>
-                        @endforeach
-                        <li>
-                          <hr class="dropdown-divider d-block d-md-none" />
-                        </li>
-                      </ul>
-                    @endif
+            <a class="d-block d-md-none text-decoration-none text-start" href="">
+              {{ $category->name }}
+            </a>
+            <li class="nav-item dropdown">
+              {{-- <a class="nav-link dropdown-toggle d-none d-md-block" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                {{ $category->name }}
+              </a> --}}
+              <a class="nav-link d-none d-md-block
+                      {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
+                href="{{ $category->children->isNotEmpty() ? '#' : route('category.listing', $category->slug) }}"
+                role="{{ $category->children->isNotEmpty() ? 'button' : '' }}" @if($category->children->isNotEmpty())
+                data-bs-toggle="dropdown" aria-expanded="false" @endif>
+                {{ $category->name }}
+              </a>
+              @if($category->children->isNotEmpty())
+                <ul class="dropdown-menu custom-dropdown">
+                  @foreach($category->children as $child)
+                    <li>
+                      <a class="dropdown-item" href="{{ route('category.listing', $child->slug) }}">
+                        {{ $child->name }}
+                      </a>
+                    </li>
+                  @endforeach
+                  <li>
+                    <hr class="dropdown-divider d-block d-md-none" />
                   </li>
+                </ul>
+              @endif
+            </li>
           @endforeach
         </ul>
 

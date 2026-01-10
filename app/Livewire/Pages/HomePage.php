@@ -10,21 +10,33 @@ use Carbon\Carbon;
 #[Title('Home')]
 class HomePage extends Component
 {
-    public $archivedPosts;
-    public $mostCommentedPosts;
-    
     public $latestPosts;
     public $olderPosts;
+    public $archivedPosts;
+    public $mostCommentedPosts;    
 
     public function mount()
     {        
-        $this->latestPosts   = Post::published()->latest()->take(3)->get();
-        $this->archivedPosts = Post::archived()->take(6)->get();
-        $this->olderPosts    = Post::published()
-                                    ->where('created_at', '<', now()->subWeeks(2))
-                                    ->latest()
-                                    ->take(6)
-                                    ->get();
+        // $this->latestPosts   = Post::published()->latest()->take(3)->get();
+
+        // Latest posts (published & visible)
+        $this->latestPosts = Post::query()->published()->where('is_archived', false)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        // $this->archivedPosts = Post::archived()->take(6)->get();
+        $this->archivedPosts = Post::query()->published()->archived()->latest()->take(8)->get();
+
+        // Older posts (published & visible, excluding latest) 
+        $this->olderPosts    = Post::query()
+            ->published()
+            ->archived()
+            ->latest()
+            ->take(6)
+            ->with('category')
+            ->where('created_at', '<', now()->subWeeks(2))
+            ->get();
     }
 
     public function render()
