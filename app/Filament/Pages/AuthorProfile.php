@@ -39,6 +39,9 @@ class AuthorProfile extends Page implements Forms\Contracts\HasForms
                     FileUpload::make('avatar')
                         ->label('Profile Image')
                         ->image()
+                        ->disk('public_uploads')
+                        ->deletable()
+                        ->previewable(false)                        
                         ->directory('author-profile')
                         ->maxSize(2048)
                         ->columnSpanFull(),
@@ -85,7 +88,7 @@ class AuthorProfile extends Page implements Forms\Contracts\HasForms
     public function save(): void
     {
         $data = $this->form->getState();
-        Storage::disk('public')->put('author_profile.json', json_encode($data, JSON_PRETTY_PRINT));
+        Storage::disk('public_uploads')->put('author_profile.json', json_encode($data, JSON_PRETTY_PRINT));
 
         Notification::make()
             ->title('Author profile updated successfully!')
@@ -95,11 +98,11 @@ class AuthorProfile extends Page implements Forms\Contracts\HasForms
 
     protected function loadProfileData(): array
     {
-        if (!Storage::disk('public')->exists('author_profile.json')) {
+        if (!Storage::disk('public_uploads')->exists('author_profile.json')) {
             return [];
         }
 
-        return json_decode(Storage::disk('public')->get('author_profile.json'), true) ?? [];
+        return json_decode(Storage::disk('public_uploads')->get('author_profile.json'), true) ?? [];
     }
 
     protected function getHeaderActions(): array

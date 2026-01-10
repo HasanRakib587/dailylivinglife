@@ -11,7 +11,7 @@ class AuthorInfo extends Component
     public $profile = [];    
     public function mount()
     {
-       $path = public_path('storage/author_profile.json');
+       $path = public_path('uploads/author_profile.json');
 
         if (!file_exists($path)) {
             // Return default data if the file doesn’t exist
