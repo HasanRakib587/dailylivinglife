@@ -10,7 +10,7 @@
             @foreach ($latestPosts as $post)
               <!-- Latest Articles 1 -->
               <div class="card border-0 my-5" wire:key='{{ $post->id }}'>
-                <img src="{{ asset('uploads/'.$post->cover_image) }}" class="card-img-top rounded-0"
+                <img src="{{ asset('uploads/'. $post->cover_image) }}" class="card-img-top rounded-0"
                   alt="{{ $post->title }}" />
                 <div class="card-body text-center">
                   <div class="creation-date my-2">

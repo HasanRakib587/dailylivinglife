@@ -85,8 +85,8 @@ class PostResource extends Resource
                 Section::make('Images')->schema([
                     FileUpload::make('cover_image')
                         ->image()                        
-                        ->disk('public')
-                        ->directory('posts')
+                        ->disk('public_uploads')
+                        ->directory('posts')                        
                         ->visibility('public')
                         ->deletable()
                         ->deleteUploadedFileUsing(fn ($file) =>
@@ -95,7 +95,7 @@ class PostResource extends Resource
                         ->multiple(false),
                     FileUpload::make('thumb_image')
                         ->image()
-                        ->directory('posts')
+                        ->directory('public_uploads')
                         ->disk('public')
                         ->visibility('public')
                         ->deletable()
@@ -105,7 +105,7 @@ class PostResource extends Resource
                         ->multiple(false),
                     FileUpload::make('long_image')
                         ->image()
-                        ->directory('posts')
+                        ->directory('public_uploads')
                         ->disk('public')
                         ->visibility('public')
                         ->deletable()
