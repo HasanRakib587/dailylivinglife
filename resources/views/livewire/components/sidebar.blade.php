@@ -12,8 +12,8 @@
                 <!-- popular post 1 -->
                 <div class="popular-posts my-5" wire:key='feat-{{ $post->id }}'>
                     <h3 class="lead">01</h3>
-                    <a class="text-decoration-none" href="">
-                        <h2 class="lead">Title of a post goes here</h2>
+                    <a class="text-decoration-none" href="{{ route('post.single', $post->slug) }}">
+                        <h2 class="lead">{{ $post->title }}</h2>
                     </a>
                 </div>
             @endforeach
