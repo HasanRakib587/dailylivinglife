@@ -2,16 +2,17 @@
     use Illuminate\Support\Facades\Storage;
 
     $seo = [];
-    if (Storage::disk('local')->exists('seo-settings.json')) {
+    if (Storage::disk('public_uploads')->exists('seo-settings.json')) {
         $seo = json_decode(Storage::disk('local')->get('seo-settings.json'), true);
     }
 @endphp
-
-<!-- 🧭 Basic SEO -->
-<title>{{ $seo['title'] . ' | ' . $title ?? config('app.name') }}</title>
-<meta name="description" content="{{ $seo['description'] ?? '' }}">
-<meta name="author" content="{{ $seo['author'] ?? '' }}">
-<meta name="robots" content="index, follow">
+@if ($seo)
+    <!-- 🧭 Basic SEO -->
+    <title>{{ $seo['title'] . ' | ' . $title ?? config('app.name') }}</title>
+    <meta name="description" content="{{ $seo['description'] ?? '' }}">
+    <meta name="author" content="{{ $seo['author'] ?? '' }}">
+    <meta name="robots" content="index, follow">    
+@endif
 @if(!empty($seo['canonical_url']))
     <link rel="canonical" href="{{ $seo['canonical_url'] }}">
 @endif

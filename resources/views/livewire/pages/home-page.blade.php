@@ -68,7 +68,6 @@
             </div>
           </section>
         </div>
-
         <div class="col-md-4">
           <!-- Author Info -->
           <livewire:components.author-info />
