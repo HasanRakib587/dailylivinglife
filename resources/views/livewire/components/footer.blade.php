@@ -39,9 +39,24 @@
     </div>
 </footer> --}}
 
-<footer class="bg-dark mt-5" style="height: 150px">
+<footer class="bg-dark mt-5 py-5">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
+            <div class="col-md-8 text-light">
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="text-decoration-none text-secondary" href="{{ route('contact.page') }}">Contact</a>
+                    </li>
+                    <li>
+                        <a class="text-decoration-none text-secondary" href="{{ route('privacy.page') }}">Privacy
+                            Policy</a>
+                    </li>
+                    <li>
+                        <a class="text-decoration-none text-secondary" href="{{ route('terms.page') }}">Terms &
+                            Condition</a>
+                    </li>
+                </ul>
+            </div>
             <div class="col-md-4 d-flex flex-wrap gap-3">
                 <a class="text-light text-decoration-none" href="https://www.facebook.com/profile.php?id=61561551233074"
                     target="_blank">
@@ -74,8 +89,8 @@
                     </svg>
                 </a>
             </div>
-            <div class="col-md-8 text-md-end text-light">
-                <p class="m-0">Copyright &copy; All Rights Reserved</p>
+            <div class="col-md-12">
+                <p class="m-0 text-secondary">Copyright &copy; All Rights Reserved</p>
             </div>
         </div>
     </div>

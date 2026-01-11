@@ -3,7 +3,7 @@
 
     $seo = [];
     if (Storage::disk('public_uploads')->exists('seo-settings.json')) {
-        $seo = json_decode(Storage::disk('local')->get('seo-settings.json'), true);
+        $seo = json_decode(Storage::disk('public_uploads')->get('seo-settings.json'), true);
     }
 @endphp
 @if ($seo)
@@ -11,7 +11,7 @@
     <title>{{ $seo['title'] . ' | ' . $title ?? config('app.name') }}</title>
     <meta name="description" content="{{ $seo['description'] ?? '' }}">
     <meta name="author" content="{{ $seo['author'] ?? '' }}">
-    <meta name="robots" content="index, follow">    
+    <meta name="robots" content="index, follow">
 @endif
 @if(!empty($seo['canonical_url']))
     <link rel="canonical" href="{{ $seo['canonical_url'] }}">
