@@ -38,21 +38,26 @@
         <!-- Top Category Heading -->
         <div class="row my-5">
             <div class="col-md-12">
-                <h1 class="text-center">{{ $parentCategory->name }}</h1>
+                {{-- <h1 class="text-center">{{ $parentCategory->name }}</h1> --}}
+                @foreach ($subcategories as $child)
+                    @if($child->id === $category->id)
+                        <h1 class="text-center">{{ $child->name }}</h1>
+                    @endif
+                @endforeach
             </div>
         </div>
         <hr />
         <!-- Sub Category Heading -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="my-3 col-md-12 d-flex justify-content-around">
                 @foreach ($subcategories as $child)
-                    @continue($child->id === $category->id) {{-- Skip current category --}}
+                    @continue($child->id === $category->id)
                     <a class="text-decoration-none text-dark" href="{{ route('category.listing', $child->slug) }}">
                         <h3>{{ $child->name }}</h3>
                     </a>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
     </div>
     <!-- Category Listing -->
     <section>
