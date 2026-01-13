@@ -79,7 +79,7 @@
                                                 <h5 class="card-title">{{ $post->title }}</h5>
                                             </a>
                                             <p class="card-text">
-                                                {!! Str::words($post->content, 30) !!}
+                                                {{-- {!! Str::words($post->content, 30) !!} --}}
                                             </p>
                                             <a href="{{ route('post.single', $post->slug) }}"
                                                 class="text-decoration-none text-dark"><span
