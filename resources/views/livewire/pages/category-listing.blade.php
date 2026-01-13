@@ -51,10 +51,10 @@
         {{-- <div class="row">
             <div class="my-3 col-md-12 d-flex justify-content-around">
                 @foreach ($subcategories as $child)
-                    @continue($child->id === $category->id)
-                    <a class="text-decoration-none text-dark" href="{{ route('category.listing', $child->slug) }}">
-                        <h3>{{ $child->name }}</h3>
-                    </a>
+                @continue($child->id === $category->id)
+                <a class="text-decoration-none text-dark" href="{{ route('category.listing', $child->slug) }}">
+                    <h3>{{ $child->name }}</h3>
+                </a>
                 @endforeach
             </div>
         </div> --}}
@@ -70,8 +70,8 @@
                                 <div class="col-md-5 ms-5" wire:key='{{ $post->id }}'>
                                     <div class="card border-0">
                                         <a href="{{ route('post.single', $post->slug) }}">
-                                            <img src="{{ asset('uploads/' . $post->cover_image) }}" class="card-img-top rounded-0"
-                                                alt="{{ $post->title }}" />
+                                            <img src="{{ asset('uploads/' . $post->cover_image) }}"
+                                                class="card-img-top rounded-0" alt="{{ $post->title }}" />
                                         </a>
                                         <div class="card-body text-center">
                                             <a href="{{ route('post.single', $post->slug) }}"
@@ -107,7 +107,7 @@
         </div>
     </section>
     <!-- Explore the Categories -->
-    <section>
+    {{-- <section>
         <div class="container-fluid">
             <div class="row my-5">
                 <div class="col-md-12 text-center">
@@ -116,25 +116,24 @@
             </div>
             <div class="row">
                 @foreach ($subcategories as $child)
-                    {{-- Skip current category --}}
-                    @continue($child->id === $category->id)
-                    @if ($child && $child->cover_image)
-                        <div class="col-md-3">
-                            <div class="card border-0">
-                                <a href="">
-                                    <img src="{{ Storage::url($child->latestPost->cover_image) }}"
-                                        class="card-img-top rounded-0" alt="{{ $child->name }}" />
-                                </a>
-                                <div class="card-body">
-                                    <a href="" class="card-text text-center text-dark text-decoration-none">
-                                        <h4>{{ $child->name }}</h4>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>                        
-                    @endif
+                @continue($child->id === $category->id)
+                @if ($child && $child->cover_image)
+                <div class="col-md-3">
+                    <div class="card border-0">
+                        <a href="">
+                            <img src="{{ Storage::url($child->latestPost->cover_image) }}"
+                                class="card-img-top rounded-0" alt="{{ $child->name }}" />
+                        </a>
+                        <div class="card-body">
+                            <a href="" class="card-text text-center text-dark text-decoration-none">
+                                <h4>{{ $child->name }}</h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 @endforeach
             </div>
         </div>
-    </section>
+    </section> --}}
 </section>

@@ -14,7 +14,7 @@
 
       <!-- ✅ One logo (we’ll center it responsively with CSS) -->
       <a class="navbar-brand fw-bold text-uppercase" href="{{ route('home') }}">
-        <img src="{{ asset('images/DLL_Logo.png') }}" class="img-fluid mt-2" style="max-height: 100px" alt="Logo">
+        <img src="{{ asset('images/DLL_LOGO_New.png') }}" class="img-fluid mt-2" style="max-height: 300px" alt="Logo">
       </a>
 
       <!-- Collapsible Menus -->
