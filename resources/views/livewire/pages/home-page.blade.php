@@ -14,7 +14,7 @@
                   alt="{{ $post->title }}" />
                 <div class="card-body text-center">
                   <div class="creation-date my-2">
-                    <span class="small px-1">{{ $post->published_at->format('F j, Y') }}</span>
+                    <span class="small px-1">{{ $post->published_at?->format('F j, Y') }}</span>
                     <span class="d-inline-block bg-danger rounded-circle" style="width: 10px; height: 10px"></span>
                     <span class="small px-1">Safiul Manowar</span>
                   </div>

@@ -6,6 +6,7 @@ use App\Models\Tag;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
@@ -60,6 +61,7 @@ class TagResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

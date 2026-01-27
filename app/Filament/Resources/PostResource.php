@@ -8,6 +8,7 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Table\Actions\DeleteAction;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
@@ -80,11 +81,14 @@ class PostResource extends Resource
                         ->multiple()
                         ->preload()
                         ->relationship('tags', 'name'),   
-                    DateTimePicker::make('published_at')->nullable()->seconds(false),                    
+                    DateTimePicker::make('published_at')
+                        ->nullable()
+                        ->seconds(false),                    
                 ]),
                 Section::make('Images')->schema([
                     FileUpload::make('cover_image')
-                        ->image()                        
+                        ->image() 
+                        ->disablePreview()                       
                         ->disk('public_uploads')
                         ->directory('posts')                        
                         ->visibility('public')
@@ -95,6 +99,7 @@ class PostResource extends Resource
                         ->multiple(false),
                     FileUpload::make('thumb_image')
                         ->image()
+                        ->disablePreview()
                         ->directory('public_uploads')
                         ->disk('public')
                         ->visibility('public')
@@ -105,6 +110,7 @@ class PostResource extends Resource
                         ->multiple(false),
                     FileUpload::make('long_image')
                         ->image()
+                        ->disablePreview()
                         ->directory('public_uploads')
                         ->disk('public')
                         ->visibility('public')
@@ -176,6 +182,7 @@ class PostResource extends Resource
                 ->url(fn($record) => self::getUrl('comments', ['record' => $record->id])),
 
                 Tables\Actions\EditAction::make(),
+                \Filament\Tables\Actions\DeleteAction::make(),                
             ])
             ->bulkActions([
                     Tables\Actions\BulkActionGroup::make([
