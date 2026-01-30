@@ -1,7 +1,7 @@
 <!-- Navabar -->
 @php
-  $leftCategories = $categories->take(4);
-  $rightCategories = $categories->skip(4);
+  $leftCategories = $categories->take(2);
+  $rightCategories = $categories->skip(2);
 @endphp
 <header>
   <nav class="py-4 navbar navbar-expand-lg position-relative">
@@ -31,7 +31,7 @@
                 {{ $category->name }}
               </a> --}}
               <a class="nav-link d-none d-md-block text-uppercase
-                      {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
+                          {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
                 href="{{ $category->children->isNotEmpty() ? '#' : route('category.listing', $category->slug) }}"
                 role="{{ $category->children->isNotEmpty() ? 'button' : '' }}" @if($category->children->isNotEmpty())
                 data-bs-toggle="dropdown" aria-expanded="false" @endif>
