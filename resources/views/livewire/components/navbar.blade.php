@@ -30,7 +30,7 @@
                 aria-expanded="false">
                 {{ $category->name }}
               </a> --}}
-              <a class="nav-link d-none d-md-block
+              <a class="nav-link d-none d-md-block text-uppercase
                       {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
                 href="{{ $category->children->isNotEmpty() ? '#' : route('category.listing', $category->slug) }}"
                 role="{{ $category->children->isNotEmpty() ? 'button' : '' }}" @if($category->children->isNotEmpty())

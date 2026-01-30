@@ -2,9 +2,8 @@
   <!-- Main Content -->
   <section>
     <div class="container">
-      <div class="row g-5">
+      <div class="row gx-5 d-flex justify-content-between">
         <div class="col-md-8">
-
           <!-- Latest Articles -->
           <section>
             @foreach ($latestPosts as $post)
@@ -68,10 +67,9 @@
             </div>
           </section>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <!-- Author Info -->
           <livewire:components.author-info />
-
           <!-- Big Salad -->
           <div class="big-salad text-center" style="margin-top: 70vh">
             <livewire:components.sidebar />
