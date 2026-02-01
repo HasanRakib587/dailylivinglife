@@ -123,10 +123,10 @@ class PostResource extends Resource
 
                 Section::make('Content')->schema([
                     FilamentLexicalEditor::make('content')
-                        // ->default(null)
-                        // ->fileAttachmentsDisk('public')
-                        // ->fileAttachmentsDirectory('Posts')
-                        // ->extraAttributes(['style' => 'min-height: 600px; overflow-y: auto;',]),
+                        ->lazy()
+                        ->live(false)
+                        ->dehydrated(true)
+                        // ->imageResizeTargetWidth(1200)
                 ])->columnSpanFull(),
             ]);
     }

@@ -3,7 +3,9 @@
     <div class="container">
         <hr class="my-5" />
         <div class="article-meta d-flex justify-content-between">
-            <p>{{ $post->published_at->format('F j, Y') }}</p>
+            @if($post->published_at)
+                <p>{{ $post->published_at->format('F j, Y') }}</p>
+            @endif
             <p class="d-none d-md-block">
                 <a class="text-decoration-none text-secondary text-uppercase"
                     href="{{ route('category.listing', $post->category->slug) }}">

@@ -2,29 +2,20 @@
 
 namespace App\Filament\Resources\PostResource\Pages;
 
-use App\Filament\Resources\PostResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Actions\Action;
+use App\Filament\Resources\PostResource;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Filament\Forms\Components\LexicalEditor;
 
 class EditPost extends EditRecord
 {
     protected static string $resource = PostResource::class;
-
-    //public bool $isNameLocked = true;   
-
-    // protected function getHeaderActions(): array
-    // {
-    //     return [
-    //         // Actions\DeleteAction::make(),            
-    //     ];
-    // }
-
         public bool $isTitleLocked = true;
 
-        protected function getHeaderActions(): array
-    {
+        protected function getHeaderActions(): array{
         return [
             // Unlock action: visible only when locked, requires confirmation
             Action::make('unlockTitle')
@@ -62,7 +53,7 @@ class EditPost extends EditRecord
         ];
     }
 
-        /**
+    /**
      * Automatically relock after saving
      */
     protected function afterSave(): void
@@ -81,5 +72,29 @@ class EditPost extends EditRecord
         $this->isTitleLocked = true;
 
         return $data;
+    }
+
+    // Optional: pack entire form state into one array (for huge forms)
+    public function getFormStatePath(): ?string
+    {
+        return 'data';
+    }
+
+        // Explicitly define the form schema for Edit page
+    protected function getFormSchema(): array
+    {
+        return [
+            TextInput::make('title')
+                ->disabled(fn () => $this->isTitleLocked)
+                ->required()
+                ->maxLength(255),
+
+            LexicalEditor::make('content')
+                ->lazy() // critical for large posts
+                ->imageDisk('public')
+                ->imageDirectory('posts')
+                ->imageResizeTargetWidth(1200)
+                ->required(),
+        ];
     }
 }
