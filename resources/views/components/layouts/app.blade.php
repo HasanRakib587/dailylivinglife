@@ -27,6 +27,41 @@
 
     @stack('scripts')
     @livewireScripts
+    <script>
+        document.addEventListener('livewire:load', () =>
+        {
+            if (!window.Livewire) return;
+
+            Livewire.hook('request', ({ fail }) =>
+            {
+                fail(({ status }) =>
+                {
+                    if (status === 403)
+                    {
+                        // Session expired / CSRF failed → recover cleanly
+                        window.location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('livewire:navigating', () =>
+        {
+            window.__filamentNavigating = true;
+        });
+
+        window.addEventListener('beforeunload', (e) =>
+        {
+            if (!window.__filamentNavigating)
+            {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+
+
 </body>
 
 </html>

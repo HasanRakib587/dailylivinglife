@@ -123,10 +123,12 @@ class PostResource extends Resource
 
                 Section::make('Content')->schema([
                     FilamentLexicalEditor::make('content')
-                        ->lazy()
+                        ->lazy()                        
                         ->live(false)
-                        ->dehydrated(true)
-                        // ->imageResizeTargetWidth(1200)
+                        ->dehydrated(true)  
+                        ->extraAttributes([
+                            'wire:ignore' => true,
+                        ])
                 ])->columnSpanFull(),
             ]);
     }
@@ -134,6 +136,7 @@ class PostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->bulkActions([])
             ->columns([
                 TextColumn::make('id')
                 ->numeric()
@@ -145,7 +148,8 @@ class PostResource extends Resource
                 ->square()
                 ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('title')
-                    ->searchable(),                
+                    ->searchable()
+                    ->wrap(),                
                 IconColumn::make('is_archived')
                     ->label('Archived')
                     ->boolean(),
