@@ -22,7 +22,7 @@ class HomePage extends Component
         // Latest posts (published & visible)
         $this->latestPosts = Post::query()->published()->where('is_archived', false)
             ->latest()
-            ->take(5)
+            ->take(3)
             ->get();
 
         // $this->archivedPosts = Post::archived()->take(6)->get();
