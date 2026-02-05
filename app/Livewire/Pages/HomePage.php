@@ -11,32 +11,46 @@ use Carbon\Carbon;
 class HomePage extends Component
 {
     public $latestPosts;
-    public $olderPosts;
     public $archivedPosts;
+    public $olderPosts;
     public $mostCommentedPosts;    
 
-    public function mount()
-    {        
-        // $this->latestPosts   = Post::published()->latest()->take(3)->get();
+    public int $olderPostsLimit = 6;
 
+    public function mount()
+    {
         // Latest posts (published & visible)
-        $this->latestPosts = Post::query()->published()->where('is_archived', false)
+        $this->latestPosts = Post::published()
+            ->where('is_archived', false)
             ->latest()
             ->take(3)
             ->get();
 
-        // $this->archivedPosts = Post::archived()->take(6)->get();
-        $this->archivedPosts = Post::query()->published()->archived()->latest()->take(8)->get();
-
-        // Older posts (published & visible, excluding latest) 
-        $this->olderPosts    = Post::query()
-            ->published()
-            // ->archived()
+        $this->archivedPosts = Post::published()
+            ->archived()
             ->latest()
-            ->take(6)
-            ->with('category')
-            ->where('published_at', '<', now()->subWeeks(2))
+            ->take(8)
             ->get();
+
+        // Older posts (published & visible, excluding latest 3) 
+        $this->loadOlderPosts();        
+    }
+
+    public function loadOlderPosts(){
+        $this->olderPosts    = Post::published()
+            ->where('published_at', '<', now()->subWeeks(2))
+            // ->latest()
+            ->orderBy('published_at', 'desc')
+            ->skip(3) // 👈 skip the 3 latest posts already shown above
+            ->take($this->olderPostsLimit)
+            ->with('category')            
+            ->withCount('comments')
+            ->get();
+    }
+
+    public function loadMoreOlderPosts(){
+        $this->olderPostsLimit += 6;
+        $this->loadOlderPosts();
     }
 
     public function render()

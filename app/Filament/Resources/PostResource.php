@@ -99,9 +99,8 @@ class PostResource extends Resource
                         ->multiple(false),
                     FileUpload::make('thumb_image')
                         ->image()
-                        ->disablePreview()
-                        ->directory('public_uploads')
-                        ->disk('public')
+                        ->disablePreview()                        
+                        ->disk('public_uploads')
                         ->visibility('public')
                         ->deletable()
                         ->deleteUploadedFileUsing(fn ($file) =>
@@ -110,9 +109,8 @@ class PostResource extends Resource
                         ->multiple(false),
                     FileUpload::make('long_image')
                         ->image()
-                        ->disablePreview()
-                        ->directory('public_uploads')
-                        ->disk('public')
+                        ->disablePreview()                        
+                        ->disk('public_uploads')
                         ->visibility('public')
                         ->deletable()
                         ->deleteUploadedFileUsing(fn ($file) =>

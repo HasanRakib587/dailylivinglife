@@ -42,26 +42,33 @@
               @foreach ($olderPosts as $post)
                 <!-- Older Post 1 -->
                 <div class="col-md-6 my-5" wire:key="{{ $post->id }}">
-                  <a class="text-decoration-none text-secondary" href="{{ route('post.single', $post->slug) }}">
+                  <a wire:navigate class="text-decoration-none text-secondary"
+                    href="{{ route('post.single', $post->slug) }}">
                     <div class="card rounded-0 border-0 text-center">
                       <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top"
                         alt="{{ $post->title }}" />
-                      <div class="card-body">
+                      <div class="card-body d-flex flex-column align-items-center text-center">
                         <h5 class="card-title">{{ $post->title }}</h5>
                         <p class="card-text">
-                          {!! Str::limit($post->content, 79) !!}
+                          {!! $post->meta_description !!}
+                          {{-- {!! Str::limit($post->content, 79) !!} --}}
                         </p>
-                        <a href="#" class="text-decoration-none">
-                          <span class="text-danger">{{ count($post->comments) }}</span> comments
-                        </a>
+                        <p class="card-text">
+                          <span class="text-danger fs-6">{{ $post->comments_count }}</span>
+                          <span class="fs-6">comments</span>
+                        </p>
                       </div>
                     </div>
                   </a>
                 </div>
               @endforeach
-              @if ($olderPosts->isNotEmpty())
+              @if ($olderPosts->count() >= $olderPostsLimit)
                 <div class="load my-5 py-5 text-center">
-                  <a class="btn btn-outline-secondary rounded-0" href="">Load Previous articles</a>
+                  <button wire:click="loadMoreOlderPosts" wire:loading.attr="disabled"
+                    class="btn btn-outline-secondary rounded-0">
+                    <span wire:loading.remove>Load Previous articles</span>
+                    <span wire:loading>Loading...</span>
+                  </button>
                 </div>
               @endif
             </div>
@@ -84,7 +91,9 @@
     <section>
       <div class="container">
         <div class="row gap-5 justify-content-center">
-          <h1 class="text-center my-5">From the archives</h1>
+          <div class="col-md-12">
+            <h1 class="text-center my-5">From the archives</h1>
+          </div>
           @foreach ($archivedPosts as $post)
             <div class="col-md-3" wire:key='{{ $post->id }}'>
               <div class="card text-center rounded-0 border-0">
