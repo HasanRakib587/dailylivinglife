@@ -35,7 +35,7 @@ class HomePage extends Component
             ->latest()
             ->take(6)
             ->with('category')
-            ->where('created_at', '<', now()->subWeeks(2))
+            ->where('published_at', '<', now()->subWeeks(2))
             ->get();
     }
 
