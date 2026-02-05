@@ -87,6 +87,42 @@
   </section>
 
   <!-- Archives -->
+  {{-- @if ($archivedPosts->isNotEmpty())
+  <section>
+    <div class="container">
+      <div class="row gap-5 justify-content-center">
+        <div class="col-md-12">
+          <h1 class="text-center my-5">From the archives</h1>
+        </div>
+        @foreach ($archivedPosts as $post)
+        <div class="col-md-3" wire:key='archived-{{ $post->id }}'>
+          <div class="card text-center rounded-0 border-0">
+            <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top" alt="{{ $post->title }}" />
+            <div class="card-body">
+              <h6>
+                <a class="text-decoration-none my-5 text-secondary" wire:navigate
+                  href="{{ route('category.listing', $post->category->slug) }}">{{ $post->category->name }}</a>
+              </h6>
+              <h5 class="card-title">
+                <a class="text-decoration-none text-secondary" wire:navigate
+                  href="{{ route('post.single', $post->slug) }}">{{ $post->title }}
+                </a>
+              </h5>
+              <p class="card-text">
+                {!! Str::limit($post->content, 79) !!}
+              </p>
+              <a href="{{ route('post.single', $post->slug) }}" class="btn"><span class="text-danger">
+                  {{ count($post->comments) }}</span> comments
+              </a>
+            </div>
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+  </section>
+  @endif --}}
+  <!-- Archives -->
   @if ($archivedPosts->isNotEmpty())
     <section>
       <div class="container">
@@ -94,26 +130,37 @@
           <div class="col-md-12">
             <h1 class="text-center my-5">From the archives</h1>
           </div>
+
           @foreach ($archivedPosts as $post)
-            <div class="col-md-3" wire:key='{{ $post->id }}'>
+            <div class="col-md-3" wire:key="archived-{{ $post->id }}">
               <div class="card text-center rounded-0 border-0">
                 <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top" alt="{{ $post->title }}" />
                 <div class="card-body">
                   <h6>
                     <a class="text-decoration-none my-5 text-secondary"
-                      href="{{ route('category.listing', $post->category->slug) }}">{{ $post->category->name }}</a>
+                      href="{{ route('category.listing', $post->category->slug) }}">
+                      {{ $post->category->name }}
+                    </a>
                   </h6>
-                  <h5 class="card-title">{{ $post->title }}</h5>
+
+                  <h5 class="card-title">
+                    <a class="text-decoration-none text-secondary" href="{{ route('post.single', $post->slug) }}">
+                      {{ $post->title }}
+                    </a>
+                  </h5>
+
                   <p class="card-text">
                     {!! Str::limit($post->content, 79) !!}
                   </p>
-                  <a href="{{ route('post.single', $post->slug) }}" class="btn"><span class="text-danger">
-                      {{ count($post->comments) }}</span> comments
+
+                  <a href="{{ route('post.single', $post->slug) }}" class="btn">
+                    <span class="text-danger">{{ count($post->comments) }}</span> comments
                   </a>
                 </div>
               </div>
             </div>
           @endforeach
+
         </div>
       </div>
     </section>

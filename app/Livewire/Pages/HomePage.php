@@ -15,14 +15,14 @@ class HomePage extends Component
     public $olderPosts;
     public $mostCommentedPosts;    
 
-    public int $olderPostsLimit = 6;
+    public int $olderPostsLimit = 4;
 
     public function mount()
     {
         // Latest posts (published & visible)
         $this->latestPosts = Post::published()
             ->where('is_archived', false)
-            ->latest()
+            ->orderBy('published_at', 'desc')
             ->take(3)
             ->get();
 
