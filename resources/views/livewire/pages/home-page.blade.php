@@ -41,8 +41,8 @@
             <div class="row">
               @foreach ($olderPosts as $post)
                 <!-- Older Post 1 -->
-                <a class="text-decoration-none text-secondary" href="{{ route('post.single', $post->slug) }}">
-                  <div class="col-md-6 my-5" wire:key='{{ $post->id }}'>
+                <div class="col-md-6 my-5" wire:key="{{ $post->id }}">
+                  <a class="text-decoration-none text-secondary" href="{{ route('post.single', $post->slug) }}">
                     <div class="card rounded-0 border-0 text-center">
                       <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top"
                         alt="{{ $post->title }}" />
@@ -56,8 +56,8 @@
                         </a>
                       </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
               @endforeach
               @if ($olderPosts->isNotEmpty())
                 <div class="load my-5 py-5 text-center">

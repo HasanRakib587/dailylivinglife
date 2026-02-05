@@ -31,7 +31,7 @@ class HomePage extends Component
         // Older posts (published & visible, excluding latest) 
         $this->olderPosts    = Post::query()
             ->published()
-            ->archived()
+            // ->archived()
             ->latest()
             ->take(6)
             ->with('category')
