@@ -45,7 +45,7 @@
                   <a wire:navigate class="text-decoration-none text-secondary"
                     href="{{ route('post.single', $post->slug) }}">
                     <div class="card rounded-0 border-0 text-center">
-                      <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top"
+                      <img src="{{ asset('uploads/' . $post->long_image) }}" class="img-fluid card-img-top"
                         alt="{{ $post->title }}" />
                       <div class="card-body d-flex flex-column align-items-center text-center">
                         <h5 class="card-title">{{ $post->title }}</h5>
