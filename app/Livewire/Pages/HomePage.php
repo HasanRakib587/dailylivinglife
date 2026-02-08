@@ -41,7 +41,7 @@ class HomePage extends Component
             ->where('published_at', '<', now()->subWeeks(2))
             // ->latest()
             ->orderBy('published_at', 'desc')
-            ->skip(3) // 👈 skip the 3 latest posts already shown above
+            // ->skip(3) // 👈 skip the 3 latest posts already shown above
             ->take($this->olderPostsLimit)
             ->with('category')            
             ->withCount('comments')
