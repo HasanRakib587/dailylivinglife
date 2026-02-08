@@ -17,6 +17,8 @@ class HomePage extends Component
 
     public int $olderPostsLimit = 4;
 
+    // private $latestPostIds;
+
     public function mount()
     {
         // Latest posts (published & visible)
@@ -24,7 +26,7 @@ class HomePage extends Component
             ->where('is_archived', false)
             ->orderBy('published_at', 'desc')
             ->take(3)
-            ->get();
+            ->get();       
 
         $this->archivedPosts = Post::published()
             ->archived()
@@ -37,11 +39,11 @@ class HomePage extends Component
     }
 
     public function loadOlderPosts(){
+        $latestPostIds = $this->latestPosts->pluck('id');
         $this->olderPosts    = Post::published()
             ->where('published_at', '<', now()->subWeeks(2))
-            // ->latest()
-            ->orderBy('published_at', 'desc')
-            // ->skip(3) // 👈 skip the 3 latest posts already shown above
+            ->whereNotIn('id', $latestPostIds) // exclude latest
+            ->orderBy('published_at', 'desc')            
             ->take($this->olderPostsLimit)
             ->with('category')            
             ->withCount('comments')
@@ -49,8 +51,19 @@ class HomePage extends Component
     }
 
     public function loadMoreOlderPosts(){
-        $this->olderPostsLimit += 6;
-        $this->loadOlderPosts();
+        // $this->olderPostsLimit += 6;
+        // $this->loadOlderPosts();
+        $alreadyLoadedIds = $this->olderPosts->pluck('id')->merge($this->latestPosts->pluck('id'));
+        $newPosts = Post::published()
+        ->where('published_at', '<', now()->subWeeks(2))
+        ->whereNotIn('id', $alreadyLoadedIds)
+        ->orderBy('published_at', 'desc')
+        ->take(6)
+        ->with('category')
+        ->withCount('comments')
+        ->get();
+
+        $this->olderPosts = $this->olderPosts->concat($newPosts);
     }
 
     public function render()
