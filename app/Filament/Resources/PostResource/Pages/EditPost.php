@@ -4,6 +4,7 @@ namespace App\Filament\Resources\PostResource\Pages;
 
 use Filament\Actions;
 use Filament\Actions\Action;
+use Illuminate\Support\Facades\Storage;
 use App\Filament\Resources\PostResource;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -88,13 +89,22 @@ class EditPost extends EditRecord
                 ->disabled(fn () => $this->isTitleLocked)
                 ->required()
                 ->maxLength(255),
+        ];
+    }
 
-            LexicalEditor::make('content')
-                ->lazy() // critical for large posts
-                ->imageDisk('public')
-                ->imageDirectory('posts')
-                ->imageResizeTargetWidth(1200)
-                ->required(),
+    protected function getFooterScripts(): array{
+        return [
+            <<<JS
+            document.addEventListener('keydown', function (e) {
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                    e.preventDefault();
+
+                    if (window.Livewire?.find(document.querySelector('[wire\\\\:id]')?.getAttribute('wire:id'))) {
+                        Livewire.dispatch('save');
+                    }
+                }
+            });
+            JS,
         ];
     }
 }

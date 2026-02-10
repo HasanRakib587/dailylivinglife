@@ -6,10 +6,9 @@ use Filament\Forms;
 use Filament\Tables;
 use App\Models\Category;
 use Filament\Forms\Form;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\IconColumn;
@@ -19,7 +18,12 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
-
+use Filament\Tables\Table;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Notifications\Notification;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
@@ -32,7 +36,7 @@ class CategoryResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->required()->minLength(1)->maxLength(150)
-                    ->live(onBlur: true)
+                    ->live(onBlur: true)                    
                     ->afterStateUpdated(fn(string $operation, $state, callable $set) => 
                         $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                 TextInput::make('slug')
@@ -45,7 +49,8 @@ class CategoryResource extends Resource
                         return Category::whereNull('parent_id')->pluck('name', 'id')->toArray();
                     })->nullable(),
                 Toggle::make('is_active')
-                    ->required(),
+                    ->required()
+                    ->default(true),
             ]);
     }
 
@@ -54,7 +59,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()->wrap(),
                 TextColumn::make('slug')
                     ->searchable(),
                 IconColumn::make('is_active')
@@ -75,8 +80,25 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make()
+                        ->before(function ($record) {
+                        if ($record->posts()->exists()) {
+                        Notification::make()
+                            ->title('Cannot delete category')
+                            ->body('This category contains posts. Please move or delete the posts first.')
+                            ->danger()
+                            ->send();
+
+                            // Stop deletion
+                            throw new \Filament\Support\Exceptions\Halt();
+                        }
+                    }),
+                //Tables\Actions\EditAction::make(),
+                //DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

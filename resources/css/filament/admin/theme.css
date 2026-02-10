@@ -1,0 +1,46 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@import '../../../../node_modules/tippy.js/dist/tippy.css';
+
+@import '../../../../vendor/awcodes/filament-tiptap-editor/resources/css/plugin.css';
+
+
+@config 'tailwind.config.js';
+
+/* Tiptap toolbar wrapper */
+.fi-panel-admin .tiptap-toolbar-left,
+.fi-panel-admin .tiptap-toolbar-right {
+    gap: 0.5rem; /* overrides gap-1 */
+}
+.fi-panel-admin .tiptap-toolbar button {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.4rem;
+    border-radius: 0.5rem;
+}
+.fi-panel-admin .tiptap-toolbar {
+    align-items: center;
+}
+.fi-panel-admin .tiptap-toolbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.fi-panel-admin .tiptap-toolbar button:hover {
+    background-color: rgb(245 158 11 / 0.15);
+}
+.dark .fi-panel-admin .tiptap-toolbar button:hover {
+    background-color: rgb(245 158 11 / 0.25);
+}
+.fi-panel-admin .ProseMirror {
+    padding: 1rem;
+    line-height: 1.75;
+    font-size: 1rem;
+}
+
+
+
+
+
+
+
+

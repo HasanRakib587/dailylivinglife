@@ -3,13 +3,14 @@
   <section>
     <div class="container">
       <div class="row gx-5 d-flex justify-content-between">
-        <div class="col-md-8">
+        <div class="col-md-7">
+
           <!-- Latest Articles -->
           <section>
             @foreach ($latestPosts as $post)
               <!-- Latest Articles -->
               <div class="card border-0 my-5" wire:key='post-{{ $post->id }}'>
-                <img src="{{ asset('uploads/' . $post->cover_image) }}" class="card-img-top rounded-0"
+                <img src="{{ Storage::disk('r2')->url($post->cover_image) }}" class="card-img-top rounded-0"
                   alt="{{ $post->title }}" />
                 <div class="card-body text-center">
                   <div class="creation-date my-2">
@@ -41,8 +42,8 @@
             <div class="row">
               @foreach ($olderPosts as $post)
                 <!-- Older Post 1 -->
-                <a class="text-decoration-none text-secondary" href="{{ route('post.single', $post->slug) }}">
-                  <div class="col-md-6 my-5" wire:key='{{ $post->id }}'>
+                <div class="col-md-6 my-5" wire:key='{{ $post->id }}'>
+                  <a class="text-decoration-none text-secondary" href="{{ route('post.single', $post->slug) }}">
                     <div class="card rounded-0 border-0 text-center">
                       <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top"
                         alt="{{ $post->title }}" />
@@ -56,18 +57,21 @@
                         </a>
                       </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
               @endforeach
-              @if ($olderPosts->isNotEmpty())
+              @if ($olderPosts->count() >= $perPage * $page)
                 <div class="load my-5 py-5 text-center">
-                  <a class="btn btn-outline-secondary rounded-0" href="">Load Previous articles</a>
+                  <button wire:click="loadMore" wire:loading.attr="disabled" class="btn btn-outline-secondary rounded-0">
+                    <span wire:loading.remove>Load Previous articles</span>
+                    <span wire:loading>Loading...</span>
+                  </button>
                 </div>
               @endif
             </div>
           </section>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <!-- Author Info -->
           <livewire:components.author-info />
           <!-- Big Salad -->

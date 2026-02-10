@@ -31,7 +31,7 @@
                 {{ $category->name }}
               </a> --}}
               <a class="nav-link d-none d-md-block text-uppercase
-                          {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
+                                  {{ $category->children->isNotEmpty() ? 'dropdown-toggle' : '' }}"
                 href="{{ $category->children->isNotEmpty() ? '#' : route('category.listing', $category->slug) }}"
                 role="{{ $category->children->isNotEmpty() ? 'button' : '' }}" @if($category->children->isNotEmpty())
                 data-bs-toggle="dropdown" aria-expanded="false" @endif>
@@ -58,7 +58,7 @@
         <!-- Right Menu -->
         <ul class="navbar-nav ms-auto">
           @foreach ($rightCategories as $category)
-            <a class="d-block d-md-none text-decoration-none text-start" href="">
+            <a class="d-block d-md-none text-decoration-none text-start" href="#">
               {{ $category->name }}
             </a>
             <li class="nav-item dropdown">
@@ -69,7 +69,8 @@
               @if($category->children->isNotEmpty())
                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                   @foreach($category->children as $child)
-                    <li><a class="dropdown-item" href="#">{{ $child->name }}</a></li>
+                    <li><a class="dropdown-item" href="{{ route('category.listing', $child->slug) }}">{{ $child->name }}</a>
+                    </li>
                   @endforeach
                   <li>
                     <hr class="dropdown-divider d-block d-md-none" />

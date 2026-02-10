@@ -1,5 +1,5 @@
 @section('meta_description', $post->meta_description)
-<section>
+<section class="overflow-x-hidden">
     <div class="container">
         <hr class="my-5" />
         <div class="article-meta d-flex justify-content-between">
@@ -41,8 +41,8 @@
                     </a>
                 </div>
                 <div class="col-md-6 my-5 mx-auto">
-                    <article>
-                        {!! $post->content !!}
+                    <article class="post-article">
+                        {!! tiptap_converter()->asHTML($post->content) !!}
                     </article>
 
                     <hr class="my-5" />
@@ -57,7 +57,7 @@
                             <span class="text-muted">No tags</span>
                         @endforelse
 
-                        <p>
+                        <p class="mt-3">
                             <a class="text-decoration-none text-secondary"
                                 href="https://www.facebook.com/profile.php?id=61561551233074" target="_blank">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">

@@ -1,31 +1,25 @@
 <?php
 
 namespace App\Filament\Resources;
-
-use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use Table\Actions\DeleteAction;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
+use FilamentTiptapEditor\TiptapEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\PostResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\PostResource\RelationManagers;
-use Malzariey\FilamentLexicalEditor\FilamentLexicalEditor;
+
 
 class PostResource extends Resource
 {
@@ -33,8 +27,7 @@ class PostResource extends Resource
     
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    public static function form(Form $form): Form
-    {
+    public static function form(Form $form): Form{
         return $form
             ->schema([
                 TextInput::make('title')                    
@@ -86,55 +79,50 @@ class PostResource extends Resource
                         ->seconds(false),                    
                 ]),
                 Section::make('Images')->schema([
-                    FileUpload::make('cover_image')
-                        ->image() 
-                        ->disablePreview()                       
-                        ->disk('public_uploads')
-                        ->directory('posts')                        
+                    FileUpload::make('cover_image') 
+                        ->disk('r2')
+                        ->directory('posts')
                         ->visibility('public')
-                        ->deletable()
-                        ->deleteUploadedFileUsing(fn ($file) =>
-                            \Storage::disk('public')->delete($file))
-                        ->nullable()
+                        ->required()                   
+                        // ->deletable()                        
+                        // ->deleteUploadedFileUsing(fn ($file) =>
+                        //     \Storage::disk('public_uploads')->delete($file))
+                        // ->nullable()
                         ->multiple(false),
                     FileUpload::make('thumb_image')
-                        ->image()
-                        ->disablePreview()
-                        ->directory('public_uploads')
-                        ->disk('public')
-                        ->visibility('public')
-                        ->deletable()
-                        ->deleteUploadedFileUsing(fn ($file) =>
-                            \Storage::disk('public')->delete($file))
+                        ->disk('r2')
+                        ->directory('posts')
+                        ->visibility('public')                       
+                        // ->deletable()
+                        // ->deleteUploadedFileUsing(fn ($file) =>
+                        //     \Storage::disk('public_uploads')->delete($file))
                         ->nullable()
                         ->multiple(false),
                     FileUpload::make('long_image')
-                        ->image()
-                        ->disablePreview()
-                        ->directory('public_uploads')
-                        ->disk('public')
-                        ->visibility('public')
-                        ->deletable()
-                        ->deleteUploadedFileUsing(fn ($file) =>
-                            \Storage::disk('public')->delete($file))
+                        ->disk('r2')
+                        ->directory('posts')
+                        ->visibility('public')                        
+                        // ->deletable()                        
+                        // ->deleteUploadedFileUsing(fn ($file) =>
+                        //     \Storage::disk('r2')->delete($file))
                         ->nullable()
                         ->multiple(false),                    
                 ]),
 
                 Section::make('Content')->schema([
-                    FilamentLexicalEditor::make('content')
-                        ->lazy()
-                        ->live(false)
-                        ->dehydrated(true)
-                        // ->imageResizeTargetWidth(1200)
+                    TiptapEditor::make('content')
+                        ->profile('default')
+                        ->disk('r2')
+                        ->visibility('public')                        
+                        ->extraInputAttributes(['style' => 'min-height: 24rem;']), 
                 ])->columnSpanFull(),
             ]);
     }
 
-    public static function table(Table $table): Table
-    {
+    public static function table(Table $table): Table{
         return $table
-            ->columns([
+            ->bulkActions([]) // disables selection column entirely
+            ->columns([                
                 TextColumn::make('id')
                 ->numeric()
                 ->sortable(),
@@ -145,7 +133,9 @@ class PostResource extends Resource
                 ->square()
                 ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('title')
-                    ->searchable(),                
+                    ->searchable()
+                    ->wrap() 
+                    ->limit(80), 
                 IconColumn::make('is_archived')
                     ->label('Archived')
                     ->boolean(),
@@ -191,15 +181,13 @@ class PostResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
+    public static function getRelations(): array{
         return [
             //
         ];
     }
 
-    public static function getPages(): array
-    {
+    public static function getPages(): array{
         return [
             'index' => Pages\ListPosts::route('/'),
             'create' => Pages\CreatePost::route('/create'),

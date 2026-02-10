@@ -2,45 +2,80 @@
 
 namespace App\Livewire\Pages;
 
-use App\Models\Post;
-use Livewire\Attributes\Title;
-use Livewire\Component;
 use Carbon\Carbon;
+use App\Models\Post;
+use Livewire\Component;
+use Livewire\Attributes\Title;
+use App\Livewire\Concerns\WithLoadMore;
 
 #[Title('Home')]
 class HomePage extends Component
 {
+    use WithLoadMore;
     public $latestPosts;
-    public $olderPosts;
     public $archivedPosts;
-    public $mostCommentedPosts;    
 
-    public function mount()
-    {        
-        // $this->latestPosts   = Post::published()->latest()->take(3)->get();
+    //public $olderPosts;
+    //public $mostCommentedPosts;
+    //public int $olderPostsLimit = 4;
+
+    public function mount(){     
 
         // Latest posts (published & visible)
-        $this->latestPosts = Post::query()->published()->where('is_archived', false)
-            ->latest()
-            ->take(5)
-            ->get();
+        $this->latestPosts = Post::published()
+            ->where('is_archived', false)
+            ->latest('published_at')
+            ->take(3)
+            ->get();       
 
-        // $this->archivedPosts = Post::archived()->take(6)->get();
-        $this->archivedPosts = Post::query()->published()->archived()->latest()->take(8)->get();
-
-        // Older posts (published & visible, excluding latest) 
-        $this->olderPosts    = Post::query()
-            ->published()
+        $this->archivedPosts = Post::published()
             ->archived()
             ->latest()
-            ->take(6)
-            ->with('category')
-            ->where('created_at', '<', now()->subWeeks(2))
+            ->take(8)
             ->get();
+
+        // Older posts (published & visible, excluding latest 3) 
+        //$this->loadOlderPosts();        
+    }
+
+    protected function olderPostsQuery(){
+        return Post::published()
+            ->where('published_at', '<', now()->subWeeks(2))
+            ->whereNotIn('id', $this->latestPosts->pluck('id'))
+            ->with('category')
+            ->withCount('comments')
+            ->latest('published_at');
+    }
+
+    public function loadOlderPosts(){
+        $latestPostIds = $this->latestPosts->pluck('id');
+        $this->olderPosts    = Post::published()
+            ->where('published_at', '<', now()->subWeeks(2))
+            ->whereNotIn('id', $latestPostIds) // exclude latest
+            ->orderBy('published_at', 'desc')            
+            ->take($this->olderPostsLimit)
+            ->with('category')            
+            ->withCount('comments')
+            ->get();
+    }
+    public function loadMoreOlderPosts(){
+        $alreadyLoadedIds = $this->olderPosts->pluck('id')->merge($this->latestPosts->pluck('id'));
+        $newPosts = Post::published()
+        ->where('published_at', '<', now()->subWeeks(2))
+        ->whereNotIn('id', $alreadyLoadedIds)
+        ->orderBy('published_at', 'desc')
+        ->take(6)
+        ->with('category')
+        ->withCount('comments')
+        ->get();
+        $this->olderPosts = $this->olderPosts->concat($newPosts);
     }
 
     public function render()
     {
-        return view('livewire.pages.home-page');
+        $olderPosts = $this->olderPostsQuery()
+            ->take($this->getLimit())
+            ->get();
+        return view('livewire.pages.home-page', compact('olderPosts'));
     }
 }

@@ -70,7 +70,7 @@
                                 <div class="col-md-5 ms-5" wire:key='{{ $post->id }}'>
                                     <div class="card border-0">
                                         <a href="{{ route('post.single', $post->slug) }}">
-                                            <img src="{{ asset('uploads/' . $post->cover_image) }}"
+                                            <img src="{{ Storage::disk('r2')->url($post->cover_image) }}"
                                                 class="card-img-top rounded-0" alt="{{ $post->title }}" />
                                         </a>
                                         <div class="card-body text-center">
