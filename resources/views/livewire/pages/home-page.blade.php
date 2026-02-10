@@ -42,14 +42,9 @@
             <div class="row">
               @foreach ($olderPosts as $post)
                 <!-- Older Post 1 -->
-<<<<<<< HEAD
-                <div class="col-md-6 my-5" wire:key='{{ $post->id }}'>
-                  <a class="text-decoration-none text-secondary" href="{{ route('post.single', $post->slug) }}">
-=======
                 <div class="col-md-6 my-5" wire:key="{{ $post->id }}">
                   <a wire:navigate class="text-decoration-none text-secondary"
                     href="{{ route('post.single', $post->slug) }}">
->>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
                     <div class="card rounded-0 border-0 text-center">
                       <img src="{{ asset('uploads/' . $post->long_image) }}" class="img-fluid card-img-top"
                         alt="{{ $post->title }}" />
@@ -68,16 +63,10 @@
                   </a>
                 </div>
               @endforeach
-<<<<<<< HEAD
               @if ($olderPosts->count() >= $perPage * $page)
-                <div class="load my-5 py-5 text-center">
-                  <button wire:click="loadMore" wire:loading.attr="disabled" class="btn btn-outline-secondary rounded-0">
-=======
-              @if ($olderPosts->count() >= $olderPostsLimit)
                 <div class="load my-5 py-5 text-center">
                   <button wire:click="loadMoreOlderPosts" wire:loading.attr="disabled"
                     class="btn btn-outline-secondary rounded-0">
->>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
                     <span wire:loading.remove>Load Previous articles</span>
                     <span wire:loading>Loading...</span>
                   </button>
@@ -97,43 +86,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Archives -->
-  {{-- @if ($archivedPosts->isNotEmpty())
-  <section>
-    <div class="container">
-      <div class="row gap-5 justify-content-center">
-        <div class="col-md-12">
-          <h1 class="text-center my-5">From the archives</h1>
-        </div>
-        @foreach ($archivedPosts as $post)
-        <div class="col-md-3" wire:key='archived-{{ $post->id }}'>
-          <div class="card text-center rounded-0 border-0">
-            <img src="{{ asset('uploads/' . $post->long_image) }}" class="card-img-top" alt="{{ $post->title }}" />
-            <div class="card-body">
-              <h6>
-                <a class="text-decoration-none my-5 text-secondary" wire:navigate
-                  href="{{ route('category.listing', $post->category->slug) }}">{{ $post->category->name }}</a>
-              </h6>
-              <h5 class="card-title">
-                <a class="text-decoration-none text-secondary" wire:navigate
-                  href="{{ route('post.single', $post->slug) }}">{{ $post->title }}
-                </a>
-              </h5>
-              <p class="card-text">
-                {!! Str::limit($post->content, 79) !!}
-              </p>
-              <a href="{{ route('post.single', $post->slug) }}" class="btn"><span class="text-danger">
-                  {{ count($post->comments) }}</span> comments
-              </a>
-            </div>
-          </div>
-        </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
-  @endif --}}
   <!-- Archives -->
   @if ($archivedPosts->isNotEmpty())
     <section>
@@ -142,7 +94,6 @@
           <div class="col-md-12">
             <h1 class="text-center my-5">From the archives</h1>
           </div>
-
           @foreach ($archivedPosts as $post)
             <div class="col-md-3" wire:key="archived-{{ $post->id }}">
               <div class="card text-center rounded-0 border-0">
@@ -172,7 +123,6 @@
               </div>
             </div>
           @endforeach
-
         </div>
       </div>
     </section>

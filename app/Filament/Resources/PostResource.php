@@ -90,23 +90,6 @@ class PostResource extends Resource
                         // ->nullable()
                         ->multiple(false),
                     FileUpload::make('thumb_image')
-<<<<<<< HEAD
-                        ->disk('r2')
-                        ->directory('posts')
-                        ->visibility('public')                       
-                        // ->deletable()
-                        // ->deleteUploadedFileUsing(fn ($file) =>
-                        //     \Storage::disk('public_uploads')->delete($file))
-                        ->nullable()
-                        ->multiple(false),
-                    FileUpload::make('long_image')
-                        ->disk('r2')
-                        ->directory('posts')
-                        ->visibility('public')                        
-                        // ->deletable()                        
-                        // ->deleteUploadedFileUsing(fn ($file) =>
-                        //     \Storage::disk('r2')->delete($file))
-=======
                         ->image()
                         ->disablePreview()                        
                         ->disk('public_uploads')
@@ -124,40 +107,24 @@ class PostResource extends Resource
                         ->deletable()
                         ->deleteUploadedFileUsing(fn ($file) =>
                             \Storage::disk('public')->delete($file))
->>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
                         ->nullable()
                         ->multiple(false),                    
                 ]),
 
                 Section::make('Content')->schema([
-<<<<<<< HEAD
                     TiptapEditor::make('content')
                         ->profile('default')
                         ->disk('r2')
                         ->visibility('public')                        
                         ->extraInputAttributes(['style' => 'min-height: 24rem;']), 
-=======
-                    FilamentLexicalEditor::make('content')
-                        ->lazy()                        
-                        ->live(false)
-                        ->dehydrated(true)  
-                        ->extraAttributes([
-                            'wire:ignore' => true,
-                        ])
->>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
                 ])->columnSpanFull(),
             ]);
     }
 
     public static function table(Table $table): Table{
         return $table
-<<<<<<< HEAD
-            ->bulkActions([]) // disables selection column entirely
-            ->columns([                
-=======
             ->bulkActions([])
             ->columns([
->>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
                 TextColumn::make('id')
                 ->numeric()
                 ->sortable(),
@@ -169,12 +136,7 @@ class PostResource extends Resource
                 ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('title')
                     ->searchable()
-<<<<<<< HEAD
-                    ->wrap() 
-                    ->limit(80), 
-=======
                     ->wrap(),                
->>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
                 IconColumn::make('is_archived')
                     ->label('Archived')
                     ->boolean(),

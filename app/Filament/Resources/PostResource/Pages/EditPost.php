@@ -107,20 +107,4 @@ class EditPost extends EditRecord
             JS,
         ];
     }
-
-    protected function getFooterScripts(): array{
-        return [
-            <<<JS
-            document.addEventListener('keydown', function (e) {
-                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
-                    e.preventDefault();
-
-                    if (window.Livewire?.find(document.querySelector('[wire\\\\:id]')?.getAttribute('wire:id'))) {
-                        Livewire.dispatch('save');
-                    }
-                }
-            });
-            JS,
-        ];
-    }
 }
