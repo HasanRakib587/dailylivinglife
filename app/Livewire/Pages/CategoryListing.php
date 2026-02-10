@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Pages;
 
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Models\Category;
+use Livewire\Attributes\Title;
+use App\Livewire\Concerns\WithLoadMore;
 
 class CategoryListing extends Component
 {
+    use WithLoadMore;
     public $slug;
     public $category;
     public $parentCategory;

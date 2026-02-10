@@ -10,8 +10,10 @@
             @foreach ($latestPosts as $post)
               <!-- Latest Articles -->
               <div class="card border-0 my-5" wire:key='post-{{ $post->id }}'>
-                <img src="{{ Storage::disk('r2')->url($post->cover_image) }}" class="card-img-top rounded-0"
-                  alt="{{ $post->title }}" />
+                @if ($post->cover_image)
+                  <img src="{{ Storage::disk('r2')->url($post->cover_image) }}" class="card-img-top rounded-0"
+                    alt="{{ $post->title }}" />
+                @endif
                 <div class="card-body text-center">
                   <div class="creation-date my-2">
                     <span class="small px-1">{{ $post->published_at?->format('F j, Y') }}</span>
@@ -20,7 +22,6 @@
                   </div>
                   <h5 class="card-title">{{ $post->title }}</h5>
                   <div class="card-text post-content">
-                    {{-- {!! Str::limit($post->content, 79) !!} --}}
                     {{ Str::limit(strip_tags($post->content), 79) }}
                   </div>
                 </div>

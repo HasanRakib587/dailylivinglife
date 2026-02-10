@@ -16,10 +16,10 @@
     @livewireStyles
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <livewire:components.navbar />
 
-    <main>
+    <main class="flex-fill">
         {{ $slot }}
     </main>
 
