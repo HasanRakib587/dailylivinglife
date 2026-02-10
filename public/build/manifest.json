@@ -22,7 +22,11 @@
     "isEntry": true
   },
   "resources/scss/main.scss": {
+<<<<<<< HEAD
     "file": "assets/main-V4GGcasx.css",
+=======
+    "file": "assets/main-B8Qaqus6.css",
+>>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
     "src": "resources/scss/main.scss",
     "isEntry": true,
     "names": [

@@ -14,17 +14,32 @@ class HomePage extends Component
     use WithLoadMore;
     public $latestPosts;
     public $archivedPosts;
+<<<<<<< HEAD
 
     //public $olderPosts;
     //public $mostCommentedPosts;
     //public int $olderPostsLimit = 4;
 
     public function mount(){     
+=======
+    public $olderPosts;
+    public $mostCommentedPosts;    
 
+    public int $olderPostsLimit = 4;
+
+    // private $latestPostIds;
+>>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
+
+    public function mount()
+    {
         // Latest posts (published & visible)
         $this->latestPosts = Post::published()
             ->where('is_archived', false)
+<<<<<<< HEAD
             ->latest('published_at')
+=======
+            ->orderBy('published_at', 'desc')
+>>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
             ->take(3)
             ->get();       
 
@@ -35,6 +50,7 @@ class HomePage extends Component
             ->get();
 
         // Older posts (published & visible, excluding latest 3) 
+<<<<<<< HEAD
         //$this->loadOlderPosts();        
     }
 
@@ -47,6 +63,11 @@ class HomePage extends Component
             ->latest('published_at');
     }
 
+=======
+        $this->loadOlderPosts();        
+    }
+
+>>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
     public function loadOlderPosts(){
         $latestPostIds = $this->latestPosts->pluck('id');
         $this->olderPosts    = Post::published()
@@ -68,6 +89,22 @@ class HomePage extends Component
         ->with('category')
         ->withCount('comments')
         ->get();
+        $this->olderPosts = $this->olderPosts->concat($newPosts);
+    }
+
+    public function loadMoreOlderPosts(){
+        // $this->olderPostsLimit += 6;
+        // $this->loadOlderPosts();
+        $alreadyLoadedIds = $this->olderPosts->pluck('id')->merge($this->latestPosts->pluck('id'));
+        $newPosts = Post::published()
+        ->where('published_at', '<', now()->subWeeks(2))
+        ->whereNotIn('id', $alreadyLoadedIds)
+        ->orderBy('published_at', 'desc')
+        ->take(6)
+        ->with('category')
+        ->withCount('comments')
+        ->get();
+
         $this->olderPosts = $this->olderPosts->concat($newPosts);
     }
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import '../../../../vendor/filament/filament/resources/css/theme.css';
 
 @import '../../../../node_modules/tippy.js/dist/tippy.css';
@@ -44,3 +45,12 @@
 
 
 
+=======
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+@import '../../../../vendor/filament/filament/resources/css/base.css';
+
+@config 'tailwind.config.js';
+>>>>>>> 0c12dafbb7d7bea86b94a8f6262ba66125310271
