@@ -51,17 +51,15 @@
             window.__filamentNavigating = true;
         });
 
-        window.addEventListener('beforeunload', (e) =>
-        {
-            if (!window.__filamentNavigating)
-            {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        });
+        // window.addEventListener('beforeunload', (e) =>
+        // {
+        //     if (!window.__filamentNavigating)
+        //     {
+        //         e.preventDefault();
+        //         e.returnValue = '';
+        //     }
+        // });
     </script>
-
-
 </body>
 
 </html>
